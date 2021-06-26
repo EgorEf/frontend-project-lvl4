@@ -10,9 +10,14 @@
 $ make install
 ```
 
-## Run
+## Run development
 
 ```sh
 $ make start
 # open http://localhost:5000
 ```
+
+## Production
+
+* [Link](https://salty-caverns-88531.herokuapp.com/)
+
