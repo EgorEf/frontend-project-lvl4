@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "lint": "npm run lint --prefix frontend",
     "build": "npm run build --prefix frontend",
     "start": "npx start-server -s ./frontend/build",
     "start-frontend": "npm run start --prefix frontend",
