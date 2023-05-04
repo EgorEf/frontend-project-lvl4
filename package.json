@@ -1,0 +1,21 @@
+{
+  "name": "@hexlet/code",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "npm run build --prefix frontend",
+    "start": "npx start-server -s ./frontend/build",
+    "start-frontend": "npm run start --prefix frontend",
+    "dev": "parallelshell \"npx start-server\" \"npm run start-frontend\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Egor Efimov",
+  "license": "ISC",
+  "dependencies": {
+    "@hexlet/chat-server": "^1.1.6"
+  },
+  "devDependencies": {
+    "parallelshell": "3.0.1"
+  }
+}
