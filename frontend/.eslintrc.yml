@@ -5,7 +5,7 @@ env:
 extends:
   - airbnb
   - plugin:react/recommended
-  - plugin:functional/recommended
+  - plugin:import/recommended
   - plugin:react-hooks/recommended
 
 parserOptions:
@@ -16,7 +16,7 @@ parserOptions:
 
 plugins:
   - react
-  - functional
+  - import
 
 rules:
   indent: ["error", 4]
@@ -28,12 +28,6 @@ rules:
   react/jsx-indent: ["error", 4]
   react/jsx-indent-props: ["error", 4]
   react/react-in-jsx-scope: 0
-  functional/no-conditional-statement: 0
-  functional/no-expression-statement: 0
-  functional/immutable-data: 0
-  functional/functional-parameters: 0
-  functional/no-try-statement: 0
-  functional/no-throw-statement: 0
   no-restricted-exports: ["error", { "restrictedNamedExports": ["defaultFrom", "index"] }]
   max-len: ["error", { "code": 140, "ignoreStrings": true }]
   no-underscore-dangle: [2, { "allow": ["__filename", "__dirname"] }]
