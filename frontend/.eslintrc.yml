@@ -24,6 +24,7 @@ rules:
   no-console: 0
   import/extensions: 0
   import/no-unresolved: 0
+  import/order: 0
   react/prop-types: 0
   react/jsx-indent: ["error", 4]
   react/jsx-indent-props: ["error", 4]
@@ -31,6 +32,7 @@ rules:
   no-restricted-exports: ["error", { "restrictedNamedExports": ["defaultFrom", "index"] }]
   max-len: ["error", { "code": 140, "ignoreStrings": true }]
   no-underscore-dangle: [2, { "allow": ["__filename", "__dirname"] }]
+  no-param-reassign: ["error", { "props": false }]
   react/function-component-definition: [2, { "namedComponents": "arrow-function" }]
   testing-library/no-debug: 0
   react/jsx-filename-extension: [1, { "extensions": [".jsx", ".js"] }]

@@ -4,5 +4,6 @@ export const PAGES_ROUTES = {
 };
 
 export const API_ROUTES = {
-    login: '/api/v1/login'
+    login: '/api/v1/login',
+    data: '/api/v1/data'
 };

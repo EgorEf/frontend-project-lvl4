@@ -7,9 +7,9 @@ import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import FormGroup from './components/FormGroup';
 
-import useAuth from '../../../../hooks/useAuth';
+import useAuth from 'hooks/useAuth';
 
-import { API_ROUTES, PAGES_ROUTES } from '../../../../routes';
+import { API_ROUTES, PAGES_ROUTES } from 'routes';
 import { initialValues, validationSchema } from './constants';
 
 import styles from './AuthenticationForm.module.css';
@@ -20,8 +20,8 @@ const AuthenticationForm = () => {
 
     const onSubmit = async (values) => {
         try {
-            const { data: { token } } = await axios.post(API_ROUTES.login, values);
-            logIn(token);
+            const { data } = await axios.post(API_ROUTES.login, values);
+            logIn(data);
             navigate(PAGES_ROUTES.main, { replace: true });
         } catch (e) {
             console.log(e);

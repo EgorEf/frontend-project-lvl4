@@ -1,15 +1,10 @@
-import React from 'react';
 import ReactDOM from 'react-dom/client';
 
-import App from './components/App';
+import init from './init';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-/* eslint-disable */
-root.render(
-    <React.StrictMode>
-        <App />
-    </React.StrictMode>
-);
+
+root.render(init());
