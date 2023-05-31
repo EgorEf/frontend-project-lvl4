@@ -1,17 +1,19 @@
 import { useState, useMemo } from 'react';
 
-import AuthContext from '../../contexts/AuthContext';
+import AuthContext from 'contexts/AuthContext';
+
+import { getToken } from 'utils';
 
 const AuthProvider = ({ children }) => {
-    const [auth, setAuth] = useState(!!localStorage.getItem('userId'));
+    const [auth, setAuth] = useState(!!getToken());
 
-    const logIn = (token) => {
-        localStorage.setItem('userId', token);
+    const logIn = (userData) => {
+        localStorage.setItem('user', JSON.stringify(userData));
         setAuth(true);
     };
 
     const logOut = () => {
-        localStorage.removeItem('userId');
+        localStorage.removeItem('user');
         setAuth(false);
     };
 
