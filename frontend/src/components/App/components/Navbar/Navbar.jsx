@@ -2,9 +2,9 @@ import Navbar from 'react-bootstrap/Navbar';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 
-import useAuth from '../../../../hooks/useAuth';
+import useAuth from 'hooks/useAuth';
 
-import { PAGES_ROUTES } from '../../../../routes';
+import ROUTES from 'routes';
 
 import styles from './Navbar.module.css';
 
@@ -13,12 +13,9 @@ const NavbarComponent = () => {
     const onExitClick = () => logOut();
 
     return (
-        <Navbar
-            className={styles.navbar}
-            // fixed="top"
-        >
+        <Navbar className={styles.navbar}>
             <Container>
-                <Navbar.Brand href={PAGES_ROUTES.main}>
+                <Navbar.Brand href={ROUTES.main}>
                     My-Test-Chat
                 </Navbar.Brand>
 

@@ -17,7 +17,7 @@ const Messages = () => {
     const channelName = currentChannel?.name || '';
 
     return (
-        <div className="d-flex flex-column pb-3 h-100 w-100">
+        <div className="d-flex flex-column h-100 w-100">
             <div className="py-3 small">
                 <p className="mb-0">
                     <strong>

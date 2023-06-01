@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import cn from 'classnames';
 
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -8,7 +9,7 @@ import Col from 'react-bootstrap/Col';
 import Channels from './components/Channels';
 import Messages from './components/Messages';
 
-import { fetchData } from 'slices/channelsSlice';
+import fetchChatData from 'slices/thunks';
 
 import styles from './MainPage.module.css';
 
@@ -16,14 +17,14 @@ const MainPage = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(fetchData());
+        dispatch(fetchChatData());
     }, [dispatch]);
 
     return (
         <Container className={styles.mainPage}>
             <Row className={styles.contentBlock}>
                 <Col
-                    className={styles.firstColumn}
+                    className={cn(styles.firstColumn, 'h-100 pb-3')}
                     xxl={3}
                     xl={3}
                     lg={3}
@@ -35,7 +36,7 @@ const MainPage = () => {
                 </Col>
 
                 <Col
-                    className="h-100"
+                    className="h-100 pb-3"
                     xxl={9}
                     xl={9}
                     lg={9}

@@ -5,18 +5,18 @@ import LoginPage from 'pages/LoginPage';
 import NotFoundPage from 'pages/NotFoundPage';
 import PrivateRoute from './components/PrivateRoute';
 
-import { PAGES_ROUTES } from 'routes';
+import ROUTES from 'routes';
 
 const AppRoutes = () => (
     <Routes>
         <Route
-            path={PAGES_ROUTES.login}
+            path={ROUTES.login}
             element={<LoginPage />}
         />
 
         <Route
             exact
-            path={PAGES_ROUTES.main}
+            path={ROUTES.main}
             element={(
                 <PrivateRoute>
                     <MainPage />

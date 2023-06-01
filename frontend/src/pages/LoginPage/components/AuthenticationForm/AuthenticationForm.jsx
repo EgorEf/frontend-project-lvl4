@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { Formik } from 'formik';
 import { useNavigate } from 'react-router-dom';
 
@@ -9,7 +8,9 @@ import FormGroup from './components/FormGroup';
 
 import useAuth from 'hooks/useAuth';
 
-import { API_ROUTES, PAGES_ROUTES } from 'routes';
+import API from 'api';
+
+import ROUTES from 'routes';
 import { initialValues, validationSchema } from './constants';
 
 import styles from './AuthenticationForm.module.css';
@@ -18,11 +19,11 @@ const AuthenticationForm = () => {
     const { logIn } = useAuth();
     const navigate = useNavigate();
 
-    const onSubmit = async (values) => {
+    const onSubmit = async ({ username, password }) => {
         try {
-            const { data } = await axios.post(API_ROUTES.login, values);
-            logIn(data);
-            navigate(PAGES_ROUTES.main, { replace: true });
+            const userData = await API.login(username, password);
+            logIn(userData);
+            navigate(ROUTES.main, { replace: true });
         } catch (e) {
             console.log(e);
         }
