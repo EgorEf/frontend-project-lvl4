@@ -1,3 +1,4 @@
-const DEFAULT_CHANNEL_ID = 1;
+import DEFAULT_CHANNEL_ID from './defaultChannel';
+import ERRORS_TYPES from './errorsTypes';
 
-export default DEFAULT_CHANNEL_ID;
+export { DEFAULT_CHANNEL_ID, ERRORS_TYPES };

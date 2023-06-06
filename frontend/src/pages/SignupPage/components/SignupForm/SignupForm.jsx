@@ -1,37 +1,34 @@
 import { useCallback } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Formik, Field, Form } from 'formik';
 
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
-
 import FormInput from 'components/FormInput';
-
-import useAuth from 'hooks/useAuth';
 
 import API from 'api';
 
-import ROUTES from 'routes';
+import useAuth from 'hooks/useAuth';
 
+import ROUTES from 'routes';
 import { ERRORS_TYPES } from 'constants';
 import { initialValues, validationSchema } from './constants';
 
-import styles from './AuthenticationForm.module.css';
-
-const AuthenticationForm = () => {
+const SignupForm = () => {
     const { logIn } = useAuth();
     const navigate = useNavigate();
 
     const onSubmit = useCallback(async ({ username, password }, actions) => {
         try {
-            const userData = await API.login(username, password);
+            const userData = await API.signup(username, password);
             logIn(userData);
             navigate(ROUTES.main, { replace: true });
         } catch ({ response }) {
-            if (response.status === ERRORS_TYPES.Unauthorized) {
+            if (response.status === ERRORS_TYPES.Conflict) {
                 actions.setErrors({
                     username: ' ',
-                    password: 'Неверные имя пользователя или пароль'
+                    password: ' ',
+                    confirmPassword: 'Такой пользователь уже существует'
                 });
             }
         }
@@ -41,11 +38,11 @@ const AuthenticationForm = () => {
         <Card>
             <Card.Header>
                 <Card.Title className="p-3 text-center" as="h1">
-                    Вход
+                    Регистрация
                 </Card.Title>
             </Card.Header>
 
-            <Card.Body className="p-5 pb-4">
+            <Card.Body className="p-5">
                 <Formik
                     initialValues={initialValues}
                     validationSchema={validationSchema}
@@ -65,34 +62,31 @@ const AuthenticationForm = () => {
                                 type="password"
                                 name="password"
                                 label="Пароль"
-                                autocomplete="current-password"
+                                autocomplete="new-password"
+                                component={FormInput}
+                            />
+
+                            <Field
+                                type="password"
+                                name="confirmPassword"
+                                label="Подтвердите пароль"
+                                autocomplete="new-password"
                                 component={FormInput}
                             />
 
                             <Button
-                                className={styles.formButton}
                                 type="submit"
-                                variant="primary"
-                                disabled={errors.username || errors.password}
+                                variant="outline-primary"
+                                disabled={errors.username || errors.password || errors.confirmPassword}
                             >
-                                Войти
+                                Зарегестрироваться
                             </Button>
                         </Form>
                     )}
                 </Formik>
             </Card.Body>
-
-            <Card.Footer className="p-3 text-center">
-                <span className="px-1">
-                    Нет аккаунта?
-                </span>
-
-                <Link to={ROUTES.signup} replace>
-                    Регистрация
-                </Link>
-            </Card.Footer>
         </Card>
     );
 };
 
-export default AuthenticationForm;
+export default SignupForm;
