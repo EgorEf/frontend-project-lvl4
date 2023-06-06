@@ -1,9 +1,6 @@
-export const PAGES_ROUTES = {
+const ROUTES = {
     main: '/',
     login: '/login'
 };
 
-export const API_ROUTES = {
-    login: '/api/v1/login',
-    data: '/api/v1/data'
-};
+export default ROUTES;

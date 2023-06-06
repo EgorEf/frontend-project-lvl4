@@ -3,7 +3,10 @@ import {
     createSelector,
     createEntityAdapter
 } from '@reduxjs/toolkit';
-import { fetchData } from './channelsSlice';
+
+import { removeChannel } from './channelsSlice';
+
+import fetchChatData from './thunks';
 
 const messagesAdapter = createEntityAdapter();
 
@@ -20,16 +23,21 @@ export const messagesSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-            .addCase(fetchData.pending, (state) => {
+            .addCase(removeChannel, (state, action) => {
+                const channelId = action.payload;
+                const restEntities = Object.values(state.entities).filter((e) => e.channelId !== channelId);
+                messagesAdapter.setAll(state, restEntities);
+            })
+            .addCase(fetchChatData.pending, (state) => {
                 state.loadingStatus = 'loading';
                 state.error = null;
             })
-            .addCase(fetchData.fulfilled, (state, action) => {
+            .addCase(fetchChatData.fulfilled, (state, action) => {
                 messagesAdapter.setAll(state, action.payload.messages);
                 state.loadingStatus = 'idle';
                 state.error = null;
             })
-            .addCase(fetchData.rejected, (state, action) => {
+            .addCase(fetchChatData.rejected, (state, action) => {
                 state.loadingStatus = 'failed';
                 state.error = action.error;
             });

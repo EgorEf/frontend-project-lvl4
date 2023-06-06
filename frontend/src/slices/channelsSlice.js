@@ -1,23 +1,10 @@
 import {
-    createAsyncThunk,
     createSlice,
     createEntityAdapter,
     createSelector
 } from '@reduxjs/toolkit';
-import axios from 'axios';
 
-import { getToken } from 'utils';
-import { API_ROUTES } from '../routes';
-
-export const fetchData = createAsyncThunk(
-    'channels/fetchData',
-    async () => {
-        const response = await axios.get(API_ROUTES.data, {
-            headers: { Authorization: `Bearer ${getToken()}` }
-        });
-        return response.data;
-    }
-);
+import fetchChatData from './thunks';
 
 const channelsAdapter = createEntityAdapter();
 
@@ -33,21 +20,24 @@ export const channelsSlice = createSlice({
     reducers: {
         selectCurrentChannelId: (state, action) => {
             state.currentChannelId = action.payload;
-        }
+        },
+        addNewChannel: channelsAdapter.addOne,
+        removeChannel: channelsAdapter.removeOne,
+        renameChannel: channelsAdapter.upsertOne
     },
     extraReducers: (builder) => {
         builder
-            .addCase(fetchData.pending, (state) => {
+            .addCase(fetchChatData.pending, (state) => {
                 state.loadingStatus = 'loading';
                 state.error = null;
             })
-            .addCase(fetchData.fulfilled, (state, action) => {
+            .addCase(fetchChatData.fulfilled, (state, action) => {
                 channelsAdapter.setAll(state, action.payload.channels);
                 state.currentChannelId = action.payload.currentChannelId;
                 state.loadingStatus = 'idle';
                 state.error = null;
             })
-            .addCase(fetchData.rejected, (state, action) => {
+            .addCase(fetchChatData.rejected, (state, action) => {
                 state.loadingStatus = 'failed';
                 state.error = action.error;
             });
@@ -80,6 +70,11 @@ export const getCurrentChannelId = createSelector(
 //     }
 // );
 
-export const { selectCurrentChannelId } = channelsSlice.actions;
+export const {
+    selectCurrentChannelId,
+    addNewChannel,
+    removeChannel,
+    renameChannel
+} = channelsSlice.actions;
 
 export default channelsSlice.reducer;

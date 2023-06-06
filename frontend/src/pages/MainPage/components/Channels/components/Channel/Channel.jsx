@@ -7,7 +7,9 @@ const Channel = ({
     active,
     name,
     removable,
-    onSelect
+    onSelect,
+    onRemove,
+    onRename
 }) => {
     const currentVariant = active ? 'secondary' : '';
 
@@ -19,7 +21,7 @@ const Channel = ({
             >
                 <Button
                     variant={currentVariant}
-                    className="text-start"
+                    className="text-start w-100"
                     onClick={onSelect}
                 >
                     {`# ${name}`}
@@ -34,8 +36,12 @@ const Channel = ({
                         />
 
                         <Dropdown.Menu>
-                            <Dropdown.Item>
-                                Test field
+                            <Dropdown.Item onClick={onRemove}>
+                                Удалить
+                            </Dropdown.Item>
+
+                            <Dropdown.Item onClick={onRename}>
+                                Переименовать
                             </Dropdown.Item>
                         </Dropdown.Menu>
                     </>
