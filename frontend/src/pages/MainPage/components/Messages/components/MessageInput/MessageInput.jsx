@@ -1,4 +1,5 @@
 import { Formik, Form } from 'formik';
+import { useTranslation } from 'react-i18next';
 
 import InputGroup from 'react-bootstrap/InputGroup';
 import FormControl from 'react-bootstrap/FormControl';
@@ -12,14 +13,18 @@ import { getUsername } from 'utils';
 import { initialValues, validationSchema } from './constants';
 
 const MessageInput = ({ channelId }) => {
+    const { t } = useTranslation();
+
     const { sendMessage } = useSocketConnection();
 
-    const onSubmit = async (values) => {
-        sendMessage({
+    const onSubmit = async (values, actions) => {
+        await sendMessage({
             body: values.messageText,
             channelId,
             username: getUsername()
         });
+
+        actions.setValues(initialValues);
     };
 
     return (
@@ -36,7 +41,9 @@ const MessageInput = ({ channelId }) => {
                             <FormControl
                                 type="messageText"
                                 name="messageText"
-                                placeholder="Введите сообщение"
+                                autoComplete="off"
+                                value={props.values.messageText}
+                                placeholder={t('Form.Field.Message')}
                                 onChange={props.handleChange}
                             />
 

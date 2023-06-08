@@ -5,7 +5,9 @@ export const initialValues = {
     password: ''
 };
 
-export const validationSchema = Yup.object().shape({
-    username: Yup.string().required('Пожалуйста заполните поле'),
-    password: Yup.string().required('Пожалуйста заполните поле')
-});
+export const getValidationSchema = (t) => (
+    Yup.object().shape({
+        username: Yup.string().required(t('Form.Errors.Required')),
+        password: Yup.string().required(t('Form.Errors.Required'))
+    })
+);

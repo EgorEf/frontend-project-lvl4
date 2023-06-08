@@ -17,9 +17,7 @@ import {
 
 import { DEFAULT_CHANNEL_ID } from 'constants';
 
-import socket from 'socket';
-
-const SocketProvider = ({ children }) => {
+const SocketProvider = ({ children, socket }) => {
     const dispatch = useDispatch();
 
     const emit = useCallback((eventName, data) => {
@@ -28,7 +26,7 @@ const SocketProvider = ({ children }) => {
                 emit(eventName, data);
             }
         });
-    }, []);
+    }, [socket]);
 
     useEffect(() => {
         socket.connect();
@@ -36,7 +34,7 @@ const SocketProvider = ({ children }) => {
         return () => {
             socket.disconnect();
         };
-    }, []);
+    }, [socket]);
 
     useEffect(() => {
         const onNewMessage = (payload) => {
@@ -68,7 +66,7 @@ const SocketProvider = ({ children }) => {
             socket.off('removeChannel', onRemoveChannel);
             socket.off('renameChannel', onRenameChannel);
         };
-    }, [dispatch]);
+    }, [dispatch, socket]);
 
     const contextState = useMemo(() => ({
         sendMessage: (messageData) => emit('newMessage', messageData),

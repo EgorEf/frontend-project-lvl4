@@ -5,6 +5,9 @@ import init from './init';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const app = async () => {
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(await init());
+};
 
-root.render(init());
+app();

@@ -1,6 +1,7 @@
 import { useRef, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useFormik } from 'formik';
+import { useTranslation } from 'react-i18next';
 
 import ModalBody from 'react-bootstrap/ModalBody';
 import Form from 'react-bootstrap/Form';
@@ -16,6 +17,7 @@ import { initialValues, validationSchema } from './constants';
 
 const ModalChannelAdd = ({ onClose }) => {
     const inputRef = useRef(null);
+    const { t } = useTranslation();
 
     const channels = useSelector(selectAll);
 
@@ -32,7 +34,7 @@ const ModalChannelAdd = ({ onClose }) => {
                 .includes(channelName);
 
             if (hasNameInChannels) {
-                actions.setErrors({ channelName: 'Должно быть уникально' });
+                actions.setErrors({ channelName: t('Form.Errors.Uniq') });
                 actions.setSubmitting(false);
                 return;
             }
@@ -50,14 +52,14 @@ const ModalChannelAdd = ({ onClose }) => {
 
     return (
         <>
-            <ModalHeader title="Добавить канал" />
+            <ModalHeader title={t('Modals.Add')} />
 
             <ModalBody>
                 <Form>
                     <Form.Control
                         ref={inputRef}
                         name="channelName"
-                        placeholder="Введите имя нового канала"
+                        placeholder={t('Form.Field.NewChannel')}
                         onChange={formik.handleChange}
                         isInvalid={!formik.isValid}
                     />
@@ -72,7 +74,8 @@ const ModalChannelAdd = ({ onClose }) => {
 
             <ModalFooter
                 disabled={formik.isSubmitting}
-                submitBtnText="Добавить"
+                submitBtnText={t('Buttons.Add')}
+                cancelBtnText={t('Buttons.Cancel')}
                 onClose={onClose}
                 onSubmit={formik.handleSubmit}
             />
