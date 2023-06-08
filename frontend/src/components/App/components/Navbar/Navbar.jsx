@@ -2,9 +2,9 @@ import Navbar from 'react-bootstrap/Navbar';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 
-import useAuth from 'hooks/useAuth';
+import NavbarBrandLink from './components/NavbarBrandLink';
 
-import ROUTES from 'routes';
+import useAuth from 'hooks/useAuth';
 
 import styles from './Navbar.module.css';
 
@@ -15,7 +15,7 @@ const NavbarComponent = () => {
     return (
         <Navbar className={styles.navbar}>
             <Container>
-                <Navbar.Brand href={ROUTES.main}>
+                <Navbar.Brand as={NavbarBrandLink}>
                     My-Test-Chat
                 </Navbar.Brand>
 

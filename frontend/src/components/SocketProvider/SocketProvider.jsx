@@ -15,7 +15,7 @@ import {
     renameChannel
 } from 'slices/channelsSlice';
 
-import DEFAULT_CHANNEL_ID from 'constants';
+import { DEFAULT_CHANNEL_ID } from 'constants';
 
 import socket from 'socket';
 
