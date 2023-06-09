@@ -1,6 +1,7 @@
 import { useRef, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useFormik } from 'formik';
+import { useTranslation } from 'react-i18next';
 
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
@@ -16,6 +17,7 @@ import { validationSchema } from './constants';
 
 const ModalRenameChannel = ({ onClose }) => {
     const inputRef = useRef(null);
+    const { t } = useTranslation();
 
     const channels = useSelector(selectAll);
     const channelId = useSelector((state) => state.modal.extra?.channelId);
@@ -36,7 +38,7 @@ const ModalRenameChannel = ({ onClose }) => {
                 .includes(channelName);
 
             if (hasNameInChannels) {
-                actions.setErrors({ channelName: 'Должно быть уникально' });
+                actions.setErrors({ channelName: t('Form.Errors.Uniq') });
                 actions.setSubmitting(false);
                 return;
             }
@@ -54,14 +56,14 @@ const ModalRenameChannel = ({ onClose }) => {
 
     return (
         <>
-            <ModalHeader title="Переименовать канал" />
+            <ModalHeader title={t('Modals.Rename')} />
 
             <Modal.Body>
                 <Form onSubmit={formik.handleSubmit}>
                     <Form.Control
                         ref={inputRef}
                         name="channelName"
-                        placeholder="Введите новое имя для канала"
+                        placeholder={t('Form.Field.RenameChannel')}
                         value={formik.values.channelName}
                         onChange={formik.handleChange}
                         isInvalid={!formik.isValid}
@@ -77,7 +79,8 @@ const ModalRenameChannel = ({ onClose }) => {
 
             <ModalFooter
                 disabled={formik.isSubmitting}
-                submitBtnText="Переименовать"
+                submitBtnText={t('Buttons.Rename')}
+                cancelBtnText={t('Buttons.Cancel')}
                 onClose={onClose}
                 onSubmit={formik.handleSubmit}
             />

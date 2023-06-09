@@ -1,6 +1,7 @@
 import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Formik, Field, Form } from 'formik';
+import { useTranslation } from 'react-i18next';
 
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
@@ -12,9 +13,10 @@ import useAuth from 'hooks/useAuth';
 
 import ROUTES from 'routes';
 import { ERRORS_TYPES } from 'constants';
-import { initialValues, validationSchema } from './constants';
+import { initialValues, getValidationSchema, validateConfirmPassword } from './constants';
 
 const SignupForm = () => {
+    const { t } = useTranslation();
     const { logIn } = useAuth();
     const navigate = useNavigate();
 
@@ -28,32 +30,32 @@ const SignupForm = () => {
                 actions.setErrors({
                     username: ' ',
                     password: ' ',
-                    confirmPassword: 'Такой пользователь уже существует'
+                    confirmPassword: t('Form.Errors.UserAlreadyExists')
                 });
             }
         }
-    }, [logIn, navigate]);
+    }, [logIn, navigate, t]);
 
     return (
         <Card>
             <Card.Header>
                 <Card.Title className="p-3 text-center" as="h1">
-                    Регистрация
+                    {t('Registration')}
                 </Card.Title>
             </Card.Header>
 
             <Card.Body className="p-5">
                 <Formik
                     initialValues={initialValues}
-                    validationSchema={validationSchema}
+                    validationSchema={getValidationSchema(t)}
                     onSubmit={onSubmit}
                 >
-                    {({ errors }) => (
+                    {({ errors, values }) => (
                         <Form>
                             <Field
                                 type="text"
                                 name="username"
-                                label="Имя пользователя"
+                                label={t('Form.Field.Username')}
                                 autocomplete="username"
                                 component={FormInput}
                             />
@@ -61,7 +63,7 @@ const SignupForm = () => {
                             <Field
                                 type="password"
                                 name="password"
-                                label="Пароль"
+                                label={t('Form.Field.Password')}
                                 autocomplete="new-password"
                                 component={FormInput}
                             />
@@ -69,8 +71,9 @@ const SignupForm = () => {
                             <Field
                                 type="password"
                                 name="confirmPassword"
-                                label="Подтвердите пароль"
+                                label={t('Form.Field.ConfirmPassword')}
                                 autocomplete="new-password"
+                                validate={validateConfirmPassword(values.password)}
                                 component={FormInput}
                             />
 
@@ -79,7 +82,7 @@ const SignupForm = () => {
                                 variant="outline-primary"
                                 disabled={errors.username || errors.password || errors.confirmPassword}
                             >
-                                Зарегестрироваться
+                                {t('Buttons.Signup')}
                             </Button>
                         </Form>
                     )}

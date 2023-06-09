@@ -3,6 +3,7 @@ import Button from 'react-bootstrap/Button';
 
 const ModalFooter = ({
     submitBtnText,
+    cancelBtnText,
     disabled,
     onClose,
     onSubmit
@@ -13,7 +14,7 @@ const ModalFooter = ({
             disabled={disabled}
             onClick={onClose}
         >
-            Отменить
+            {cancelBtnText}
         </Button>
 
         <Button

@@ -1,19 +1,23 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import Container from 'react-bootstrap/Container';
 
 import styles from './NotFoundPage.module.css';
 
-const NotFoundPage = () => (
-    <Container className={styles.notFoundPage}>
-        <h1 className={styles.error}>
-            404
-        </h1>
+const NotFoundPage = () => {
+    const { t } = useTranslation();
 
-        <h2 className={styles.errorText}>
-            Sorry. Page not found
-        </h2>
-    </Container>
-);
+    return (
+        <Container className={styles.notFoundPage}>
+            <h1 className={styles.error}>
+                {t('NotFoundPage.Code')}
+            </h1>
 
+            <h2 className={styles.errorText}>
+                {t('NotFoundPage.Text')}
+            </h2>
+        </Container>
+    );
+};
 export default NotFoundPage;

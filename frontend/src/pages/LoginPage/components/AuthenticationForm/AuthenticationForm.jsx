@@ -1,6 +1,7 @@
 import { useCallback } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { Formik, Field, Form } from 'formik';
+import { useTranslation } from 'react-i18next';
 
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
@@ -14,11 +15,12 @@ import API from 'api';
 import ROUTES from 'routes';
 
 import { ERRORS_TYPES } from 'constants';
-import { initialValues, validationSchema } from './constants';
+import { initialValues, getValidationSchema } from './constants';
 
 import styles from './AuthenticationForm.module.css';
 
 const AuthenticationForm = () => {
+    const { t } = useTranslation();
     const { logIn } = useAuth();
     const navigate = useNavigate();
 
@@ -31,24 +33,24 @@ const AuthenticationForm = () => {
             if (response.status === ERRORS_TYPES.Unauthorized) {
                 actions.setErrors({
                     username: ' ',
-                    password: 'Неверные имя пользователя или пароль'
+                    password: t('Form.Errors.NameOrPassword')
                 });
             }
         }
-    }, [logIn, navigate]);
+    }, [logIn, navigate, t]);
 
     return (
         <Card>
             <Card.Header>
                 <Card.Title className="p-3 text-center" as="h1">
-                    Вход
+                    {t('Entrance')}
                 </Card.Title>
             </Card.Header>
 
             <Card.Body className="p-5 pb-4">
                 <Formik
                     initialValues={initialValues}
-                    validationSchema={validationSchema}
+                    validationSchema={getValidationSchema(t)}
                     onSubmit={onSubmit}
                 >
                     {({ errors }) => (
@@ -56,7 +58,7 @@ const AuthenticationForm = () => {
                             <Field
                                 type="text"
                                 name="username"
-                                label="Имя пользователя"
+                                label={t('Form.Field.Username')}
                                 autocomplete="username"
                                 component={FormInput}
                             />
@@ -64,7 +66,7 @@ const AuthenticationForm = () => {
                             <Field
                                 type="password"
                                 name="password"
-                                label="Пароль"
+                                label={t('Form.Field.Password')}
                                 autocomplete="current-password"
                                 component={FormInput}
                             />
@@ -75,7 +77,7 @@ const AuthenticationForm = () => {
                                 variant="primary"
                                 disabled={errors.username || errors.password}
                             >
-                                Войти
+                                {t('Buttons.LogIn')}
                             </Button>
                         </Form>
                     )}
@@ -84,11 +86,11 @@ const AuthenticationForm = () => {
 
             <Card.Footer className="p-3 text-center">
                 <span className="px-1">
-                    Нет аккаунта?
+                    {t('NotAccaunt')}
                 </span>
 
                 <Link to={ROUTES.signup} replace>
-                    Регистрация
+                    {t('Registration')}
                 </Link>
             </Card.Footer>
         </Card>

@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next';
+
 import Navbar from 'react-bootstrap/Navbar';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
@@ -9,7 +11,9 @@ import useAuth from 'hooks/useAuth';
 import styles from './Navbar.module.css';
 
 const NavbarComponent = () => {
+    const { t } = useTranslation();
     const { auth, logOut } = useAuth();
+
     const onExitClick = () => logOut();
 
     return (
@@ -21,7 +25,7 @@ const NavbarComponent = () => {
 
                 {auth && (
                     <Button onClick={onExitClick}>
-                        Выйти
+                        {t('Buttons.LogOut')}
                     </Button>
                 )}
             </Container>

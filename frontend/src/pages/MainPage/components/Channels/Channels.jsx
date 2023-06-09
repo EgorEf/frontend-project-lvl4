@@ -1,5 +1,6 @@
 import { useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import cn from 'classnames';
 
 import Container from 'react-bootstrap/Container';
@@ -22,6 +23,7 @@ import styles from './Channels.module.css';
 
 const Channels = () => {
     const dispatch = useDispatch();
+    const { t } = useTranslation();
 
     const channels = useSelector(selectAll);
     const currentChannelId = useSelector(getCurrentChannelId);
@@ -51,7 +53,7 @@ const Channels = () => {
         <>
             <Container className="d-flex justify-content-between py-4 mb-1">
                 <h6 className="m-0">
-                    Каналы
+                    {t('Channels')}
                 </h6>
 
                 <Button
