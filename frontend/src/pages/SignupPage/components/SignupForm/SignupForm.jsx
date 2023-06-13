@@ -2,6 +2,7 @@ import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Formik, Field, Form } from 'formik';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
@@ -25,13 +26,17 @@ const SignupForm = () => {
             const userData = await API.signup(username, password);
             logIn(userData);
             navigate(ROUTES.main, { replace: true });
-        } catch ({ response }) {
-            if (response.status === ERRORS_TYPES.Conflict) {
+        } catch (e) {
+            if (e.response?.status === ERRORS_TYPES.Conflict) {
                 actions.setErrors({
                     username: ' ',
                     password: ' ',
                     confirmPassword: t('Form.Errors.UserAlreadyExists')
                 });
+            }
+
+            if (e.code === 'ERR_NETWORK') {
+                toast.error(t('Toasts.Error.Connection'));
             }
         }
     }, [logIn, navigate, t]);
@@ -55,7 +60,7 @@ const SignupForm = () => {
                             <Field
                                 type="text"
                                 name="username"
-                                label={t('Form.Field.Username')}
+                                label={t('Form.Fields.Username')}
                                 autocomplete="username"
                                 component={FormInput}
                             />
@@ -63,7 +68,7 @@ const SignupForm = () => {
                             <Field
                                 type="password"
                                 name="password"
-                                label={t('Form.Field.Password')}
+                                label={t('Form.Fields.Password')}
                                 autocomplete="new-password"
                                 component={FormInput}
                             />
@@ -71,7 +76,7 @@ const SignupForm = () => {
                             <Field
                                 type="password"
                                 name="confirmPassword"
-                                label={t('Form.Field.ConfirmPassword')}
+                                label={t('Form.Fields.ConfirmPassword')}
                                 autocomplete="new-password"
                                 validate={validateConfirmPassword(values.password)}
                                 component={FormInput}

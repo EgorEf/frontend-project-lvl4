@@ -43,7 +43,7 @@ const MessageInput = ({ channelId }) => {
                                 name="messageText"
                                 autoComplete="off"
                                 value={props.values.messageText}
-                                placeholder={t('Form.Field.Message')}
+                                placeholder={t('Form.Fields.Message')}
                                 onChange={props.handleChange}
                             />
 

@@ -1,6 +1,7 @@
 import { useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 import cn from 'classnames';
 
 import Container from 'react-bootstrap/Container';
@@ -34,9 +35,10 @@ const Channels = () => {
         dispatch(selectCurrentChannelId(id))
     ), [dispatch]);
 
-    const onRemoveChannel = useCallback((id) => () => (
-        removeChannel(id)
-    ), [removeChannel]);
+    const onRemoveChannel = useCallback((id) => () => {
+        removeChannel(id);
+        toast.success(t('Toasts.Success.ChannelRemove'));
+    }, [removeChannel, t]);
 
     const onShowModalAddChannel = useCallback(() => (
         dispatch(showModal({ type: 'addChannel' }))

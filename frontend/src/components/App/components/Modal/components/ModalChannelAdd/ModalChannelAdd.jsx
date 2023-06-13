@@ -2,6 +2,7 @@ import { useRef, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 
 import ModalBody from 'react-bootstrap/ModalBody';
 import Form from 'react-bootstrap/Form';
@@ -41,6 +42,7 @@ const ModalChannelAdd = ({ onClose }) => {
 
             addNewChannel(channelName);
             onClose();
+            toast.success(t('Toasts.Success.ChannelAdd'));
         }
     });
 
@@ -59,7 +61,7 @@ const ModalChannelAdd = ({ onClose }) => {
                     <Form.Control
                         ref={inputRef}
                         name="channelName"
-                        placeholder={t('Form.Field.NewChannel')}
+                        placeholder={t('Form.Fields.NewChannel')}
                         onChange={formik.handleChange}
                         isInvalid={!formik.isValid}
                     />
