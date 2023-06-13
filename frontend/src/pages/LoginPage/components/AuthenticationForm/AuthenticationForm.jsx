@@ -2,6 +2,7 @@ import { useCallback } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { Formik, Field, Form } from 'formik';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
@@ -29,12 +30,16 @@ const AuthenticationForm = () => {
             const userData = await API.login(username, password);
             logIn(userData);
             navigate(ROUTES.main, { replace: true });
-        } catch ({ response }) {
-            if (response.status === ERRORS_TYPES.Unauthorized) {
+        } catch ({ code, response }) {
+            if (response?.status === ERRORS_TYPES.Unauthorized) {
                 actions.setErrors({
                     username: ' ',
                     password: t('Form.Errors.NameOrPassword')
                 });
+            }
+
+            if (code === 'ERR_NETWORK') {
+                toast.error(t('Toasts.Error.Connection'));
             }
         }
     }, [logIn, navigate, t]);
@@ -58,7 +63,7 @@ const AuthenticationForm = () => {
                             <Field
                                 type="text"
                                 name="username"
-                                label={t('Form.Field.Username')}
+                                label={t('Form.Fields.Username')}
                                 autocomplete="username"
                                 component={FormInput}
                             />
@@ -66,7 +71,7 @@ const AuthenticationForm = () => {
                             <Field
                                 type="password"
                                 name="password"
-                                label={t('Form.Field.Password')}
+                                label={t('Form.Fields.Password')}
                                 autocomplete="current-password"
                                 component={FormInput}
                             />

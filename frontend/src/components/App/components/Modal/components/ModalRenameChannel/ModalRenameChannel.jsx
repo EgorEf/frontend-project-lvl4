@@ -2,6 +2,7 @@ import { useRef, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
@@ -45,6 +46,7 @@ const ModalRenameChannel = ({ onClose }) => {
 
             renameChannel(channelId, channelName);
             onClose();
+            toast.success(t('Toasts.Success.ChannelRename'));
         }
     });
 
@@ -63,7 +65,7 @@ const ModalRenameChannel = ({ onClose }) => {
                     <Form.Control
                         ref={inputRef}
                         name="channelName"
-                        placeholder={t('Form.Field.RenameChannel')}
+                        placeholder={t('Form.Fields.RenameChannel')}
                         value={formik.values.channelName}
                         onChange={formik.handleChange}
                         isInvalid={!formik.isValid}

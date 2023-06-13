@@ -14,7 +14,7 @@ export default {
             Rename: 'Переименовать'
         },
         Form: {
-            Field: {
+            Fields: {
                 Username: 'Имя пользователя',
                 Password: 'Пароль',
                 ConfirmPassword: 'Подтвердите пароль',
@@ -29,6 +29,16 @@ export default {
                 UserAlreadyExists: 'Такой пользователь уже существует',
                 LengthLimit: 'От 3 до 20 символов',
                 Short: 'Не менее 6 символов'
+            }
+        },
+        Toasts: {
+            Success: {
+                ChannelAdd: 'Канал создан',
+                ChannelRemove: 'Канал удален',
+                ChannelRename: 'Канал переименован'
+            },
+            Error: {
+                Connection: 'Ошибка соединения!'
             }
         },
         Modals: {
