@@ -1,3 +1,5 @@
+import filter from 'leo-profanity';
+
 const MessagesList = ({ list }) => (
     <div className="overflow-auto">
         {list.map((item) => (
@@ -8,7 +10,8 @@ const MessagesList = ({ list }) => (
                 <b>
                     {item.username}
                 </b>
-                {`: ${item.body}`}
+
+                {`: ${filter.clean(item.body)}`}
             </div>
         ))}
     </div>
