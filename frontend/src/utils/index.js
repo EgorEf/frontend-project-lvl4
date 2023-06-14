@@ -1,11 +1,4 @@
-const getUserDataFromLocalStorage = () => JSON.parse(localStorage.getItem('user')) || {};
+import { getUsername, getToken } from './localStorage';
+import getTextByNumOfEntities from './text';
 
-export const getUsername = () => {
-    const userDataFromLocalStorage = getUserDataFromLocalStorage();
-    return userDataFromLocalStorage?.username || null;
-};
-
-export const getToken = () => {
-    const userDataFromLocalStorage = getUserDataFromLocalStorage();
-    return userDataFromLocalStorage?.token || null;
-};
+export { getUsername, getToken, getTextByNumOfEntities };
