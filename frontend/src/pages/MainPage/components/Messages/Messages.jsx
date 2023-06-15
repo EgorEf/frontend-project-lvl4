@@ -7,6 +7,8 @@ import MessagesList from './components/MessagesList';
 import { getCurrentChannelId, selectById } from 'slices/channelsSlice';
 import { getMessagesByChannelId } from 'slices/messagesSlice';
 
+import { getTextByNumOfEntities } from 'utils';
+
 import styles from './Messages.module.css';
 
 const Messages = () => {
@@ -26,7 +28,7 @@ const Messages = () => {
                 </p>
 
                 <span className="text-muted">
-                    {messagesList.length}
+                    {getTextByNumOfEntities(messagesList.length, ['сообщение', 'сообщения', 'сообщений'])}
                 </span>
             </div>
 

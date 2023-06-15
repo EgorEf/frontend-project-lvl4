@@ -25,7 +25,7 @@ export default {
             Errors: {
                 Uniq: 'Должно быть уникально',
                 NameOrPassword: 'Неверные имя пользователя или пароль',
-                Required: 'Пожалуйста заполните поле',
+                Required: 'Обязательное поле',
                 UserAlreadyExists: 'Такой пользователь уже существует',
                 LengthLimit: 'От 3 до 20 символов',
                 Short: 'Не менее 6 символов'

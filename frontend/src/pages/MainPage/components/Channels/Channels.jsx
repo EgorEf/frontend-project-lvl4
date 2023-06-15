@@ -20,6 +20,8 @@ import {
 } from 'slices/channelsSlice';
 import { showModal } from 'slices/modalSlice';
 
+import { MODAL_TYPES } from 'constants';
+
 import styles from './Channels.module.css';
 
 const Channels = () => {
@@ -41,12 +43,12 @@ const Channels = () => {
     }, [removeChannel, t]);
 
     const onShowModalAddChannel = useCallback(() => (
-        dispatch(showModal({ type: 'addChannel' }))
+        dispatch(showModal({ type: MODAL_TYPES.Add }))
     ), [dispatch]);
 
     const onShowModalRenameChannel = useCallback((channelId) => () => (
         dispatch(showModal({
-            type: 'renameChannel',
+            type: MODAL_TYPES.Rename,
             extra: { channelId }
         }))
     ), [dispatch]);

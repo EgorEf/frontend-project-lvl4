@@ -17,7 +17,6 @@ export const modalSlice = createSlice({
         },
         closeModal: () => initialState
     }
-    // extraReducers: (builder) => {}
 });
 
 export const { showModal, closeModal } = modalSlice.actions;

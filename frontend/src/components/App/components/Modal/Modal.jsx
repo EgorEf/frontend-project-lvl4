@@ -8,12 +8,14 @@ import ModalRenameChannel from './components/ModalRenameChannel';
 
 import { closeModal } from 'slices/modalSlice';
 
+import { MODAL_TYPES } from 'constants';
+
 const renderModalContentByType = (modalType, onClose) => {
-    if (modalType === 'addChannel') {
+    if (modalType === MODAL_TYPES.Add) {
         return <ModalChannelAdd onClose={onClose} />;
     }
 
-    if (modalType === 'renameChannel') {
+    if (modalType === MODAL_TYPES.Rename) {
         return <ModalRenameChannel onClose={onClose} />;
     }
     return null;
