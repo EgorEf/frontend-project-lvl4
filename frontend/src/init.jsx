@@ -12,7 +12,7 @@ import { getSocketInstance, initI18n, initLeoProfanity } from 'services';
 import store from 'slices';
 
 const rollbarConfig = {
-    accessToken: 'fa092eef5d834f279349e07a8da1a24b',
+    accessToken: 'b7803267fdbe4c3093eece4893868540',
     environment: 'production'
 };
 
