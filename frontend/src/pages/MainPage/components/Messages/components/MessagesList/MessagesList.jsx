@@ -2,35 +2,35 @@ import { useRef, useEffect } from 'react';
 import filter from 'leo-profanity';
 
 const MessagesList = ({ list }) => {
-    const ref = useRef();
+  const ref = useRef();
 
-    useEffect(() => {
-        const messageContainer = ref.current;
+  useEffect(() => {
+    const messageContainer = ref.current;
 
-        if (messageContainer) {
-            messageContainer.scrollTop = messageContainer.scrollHeight;
-        }
-    });
+    if (messageContainer) {
+      messageContainer.scrollTop = messageContainer.scrollHeight;
+    }
+  });
 
-    return (
+  return (
+    <div
+      ref={ref}
+      className="overflow-auto"
+    >
+      {list.map((item) => (
         <div
-            ref={ref}
-            className="overflow-auto"
+          key={item.id}
+          className="mb-2 text-break"
         >
-            {list.map((item) => (
-                <div
-                    key={item.id}
-                    className="mb-2 text-break"
-                >
-                    <b>
-                        {item.username}
-                    </b>
+          <b>
+            {item.username}
+          </b>
 
-                    {`: ${filter.clean(item.body)}`}
-                </div>
-            ))}
+          {`: ${filter.clean(item.body)}`}
         </div>
-    );
+      ))}
+    </div>
+  );
 };
 
 export default MessagesList;
