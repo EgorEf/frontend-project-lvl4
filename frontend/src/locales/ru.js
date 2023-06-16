@@ -1,5 +1,6 @@
 export default {
     translation: {
+        Name: 'Hexlet Chat',
         Channels: 'Каналы',
         Entrance: 'Вход',
         Registration: 'Регистрация',

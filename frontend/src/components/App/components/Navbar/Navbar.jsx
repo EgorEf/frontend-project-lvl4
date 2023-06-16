@@ -20,7 +20,7 @@ const NavbarComponent = () => {
         <Navbar className={styles.navbar}>
             <Container>
                 <Navbar.Brand as={NavbarBrandLink}>
-                    My-Test-Chat
+                    {t('Name')}
                 </Navbar.Brand>
 
                 {auth && (
