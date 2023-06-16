@@ -13,54 +13,55 @@ import { getUsername } from 'utils';
 import { initialValues, validationSchema } from './constants';
 
 const MessageInput = ({ channelId }) => {
-    const { t } = useTranslation();
+  const { t } = useTranslation();
 
-    const { sendMessage } = useSocketConnection();
+  const { sendMessage } = useSocketConnection();
 
-    const onSubmit = async (values, actions) => {
-        await sendMessage({
-            body: values.messageText,
-            channelId,
-            username: getUsername()
-        });
+  const onSubmit = async (values, actions) => {
+    await sendMessage({
+      body: values.messageText,
+      channelId,
+      username: getUsername(),
+    });
 
-        actions.setValues(initialValues);
-    };
+    actions.setValues(initialValues);
+  };
 
-    return (
-        <div className="mt-auto pt-3">
-            <Formik
-                initialValues={initialValues}
-                validationSchema={validationSchema}
-                validateOnMount
-                onSubmit={onSubmit}
-            >
-                {(props) => (
-                    <Form onSubmit={props.handleSubmit}>
-                        <InputGroup>
-                            <FormControl
-                                type="messageText"
-                                name="messageText"
-                                autoComplete="off"
-                                value={props.values.messageText}
-                                placeholder={t('Form.Fields.Message')}
-                                onChange={props.handleChange}
-                            />
+  return (
+    <div className="mt-auto pt-3">
+      <Formik
+        initialValues={initialValues}
+        validationSchema={validationSchema}
+        validateOnMount
+        onSubmit={onSubmit}
+      >
+        {(props) => (
+          <Form onSubmit={props.handleSubmit}>
+            <InputGroup>
+              <FormControl
+                type="messageText"
+                name="messageText"
+                autoComplete="off"
+                value={props.values.messageText}
+                placeholder={t('Form.Fields.Message')}
+                aria-label="Новое сообщение"
+                onChange={props.handleChange}
+              />
 
-                            <Button
-                                type="submit"
-                                variant={props.isValid ? 'primary' : 'secondary'}
-                                disabled={!props.isValid}
-                                className="btn-group-vertical"
-                            >
-                                <Image src="icons/arrow-right.svg" />
-                            </Button>
-                        </InputGroup>
-                    </Form>
-                )}
-            </Formik>
-        </div>
-    );
+              <Button
+                type="submit"
+                variant={props.isValid ? 'primary' : 'secondary'}
+                disabled={!props.isValid}
+                className="btn-group-vertical"
+              >
+                <Image src="icons/arrow-right.svg" />
+              </Button>
+            </InputGroup>
+          </Form>
+        )}
+      </Formik>
+    </div>
+  );
 };
 
 export default MessageInput;

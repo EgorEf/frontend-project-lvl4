@@ -11,26 +11,26 @@ import useAuth from 'hooks/useAuth';
 import styles from './Navbar.module.css';
 
 const NavbarComponent = () => {
-    const { t } = useTranslation();
-    const { auth, logOut } = useAuth();
+  const { t } = useTranslation();
+  const { auth, logOut } = useAuth();
 
-    const onExitClick = () => logOut();
+  const onExitClick = () => logOut();
 
-    return (
-        <Navbar className={styles.navbar}>
-            <Container>
-                <Navbar.Brand as={NavbarBrandLink}>
-                    My-Test-Chat
-                </Navbar.Brand>
+  return (
+    <Navbar className={styles.navbar}>
+      <Container>
+        <Navbar.Brand as={NavbarBrandLink}>
+          {t('ProjectName')}
+        </Navbar.Brand>
 
-                {auth && (
-                    <Button onClick={onExitClick}>
-                        {t('Buttons.LogOut')}
-                    </Button>
-                )}
-            </Container>
-        </Navbar>
-    );
+        {auth && (
+          <Button onClick={onExitClick}>
+            {t('Buttons.LogOut')}
+          </Button>
+        )}
+      </Container>
+    </Navbar>
+  );
 };
 
 export default NavbarComponent;

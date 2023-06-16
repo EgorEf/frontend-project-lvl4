@@ -1,7 +1,6 @@
 import { useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { toast } from 'react-toastify';
 import cn from 'classnames';
 
 import Container from 'react-bootstrap/Container';
@@ -10,13 +9,12 @@ import Button from 'react-bootstrap/Button';
 import Nav from 'react-bootstrap/Nav';
 
 import Channel from './components/Channel';
-
-import useSocketConnection from 'hooks/useSocketConnection';
+import ChannelRemovable from './components/ChannelRemovable';
 
 import {
-    selectCurrentChannelId,
-    selectAll,
-    getCurrentChannelId
+  selectCurrentChannelId,
+  selectAll,
+  getCurrentChannelId,
 } from 'slices/channelsSlice';
 import { showModal } from 'slices/modalSlice';
 
@@ -25,77 +23,80 @@ import { MODAL_TYPES } from 'constants';
 import styles from './Channels.module.css';
 
 const Channels = () => {
-    const dispatch = useDispatch();
-    const { t } = useTranslation();
+  const dispatch = useDispatch();
+  const { t } = useTranslation();
 
-    const channels = useSelector(selectAll);
-    const currentChannelId = useSelector(getCurrentChannelId);
+  const channels = useSelector(selectAll);
+  const currentChannelId = useSelector(getCurrentChannelId);
 
-    const { removeChannel } = useSocketConnection();
+  const onSelectChannel = useCallback((id) => () => (
+    dispatch(selectCurrentChannelId(id))
+  ), [dispatch]);
 
-    const onSelectChannel = useCallback((id) => () => (
-        dispatch(selectCurrentChannelId(id))
-    ), [dispatch]);
+  const onShowModalByType = useCallback((type, channelId = null) => () => {
+    const payload = {
+      type,
+      ...(channelId ? { extra: { channelId } } : {}),
+    };
+    dispatch(showModal(payload));
+  }, [dispatch]);
 
-    const onRemoveChannel = useCallback((id) => () => {
-        removeChannel(id);
-        toast.success(t('Toasts.Success.ChannelRemove'));
-    }, [removeChannel, t]);
+  return (
+    <>
+      <Container className="d-flex justify-content-between py-4 mb-1">
+        <h6 className="m-0">
+          {t('Channels')}
+        </h6>
 
-    const onShowModalAddChannel = useCallback(() => (
-        dispatch(showModal({ type: MODAL_TYPES.Add }))
-    ), [dispatch]);
+        <Button
+          type="button"
+          variant=""
+          className="p-0 text-primary btn-group-vertical"
+          onClick={onShowModalByType(MODAL_TYPES.Add)}
+        >
+          <Image
+            src="icons/plus-square.svg"
+            fluid
+          />
 
-    const onShowModalRenameChannel = useCallback((channelId) => () => (
-        dispatch(showModal({
-            type: MODAL_TYPES.Rename,
-            extra: { channelId }
-        }))
-    ), [dispatch]);
+          <span className="visually-hidden">+</span>
+        </Button>
+      </Container>
 
-    return (
-        <>
-            <Container className="d-flex justify-content-between py-4 mb-1">
-                <h6 className="m-0">
-                    {t('Channels')}
-                </h6>
+      <Nav
+        className={cn(styles.channelsList, 'flex-column flex-nowrap overflow-auto h-100')}
+        as="ul"
+      >
+        {channels.map(({
+          id,
+          name,
+          removable,
+        }) => {
+          const active = id === currentChannelId;
 
-                <Button
-                    type="button"
-                    variant=""
-                    className="p-0 text-primary btn-group-vertical"
-                    onClick={onShowModalAddChannel}
-                >
-                    <Image
-                        src="icons/plus-square.svg"
-                        fluid
-                    />
-                </Button>
-            </Container>
-
-            <Nav
-                className={cn(styles.channelsList, 'flex-column flex-nowrap overflow-auto h-100')}
-                as="ul"
-            >
-                {channels.map(({
-                    id,
-                    name,
-                    removable
-                }) => (
-                    <Channel
-                        key={id}
-                        id={id}
-                        active={id === currentChannelId}
-                        name={name}
-                        removable={removable}
-                        onSelect={onSelectChannel(id)}
-                        onRemove={onRemoveChannel(id)}
-                        onRename={onShowModalRenameChannel(id)}
-                    />
-                ))}
-            </Nav>
-        </>
-    );
+          return (
+            <Nav.Item as="li" key={id}>
+              {removable ? (
+                <ChannelRemovable
+                  name={name}
+                  variant={active ? 'secondary' : ''}
+                  onSelect={onSelectChannel(id)}
+                  onRemove={onShowModalByType(MODAL_TYPES.Remove, id)}
+                  onRename={onShowModalByType(MODAL_TYPES.Rename, id)}
+                />
+              ) : (
+                <Channel
+                  name={name}
+                  variant={active ? 'secondary' : ''}
+                  onSelect={onSelectChannel(id)}
+                />
+              )}
+            </Nav.Item>
+          );
+        })}
+      </Nav>
+    </>
+  );
 };
 
 export default Channels;

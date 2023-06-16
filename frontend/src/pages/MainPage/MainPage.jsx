@@ -14,41 +14,41 @@ import fetchChatData from 'slices/thunks';
 import styles from './MainPage.module.css';
 
 const MainPage = () => {
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-    useEffect(() => {
-        dispatch(fetchChatData());
-    }, [dispatch]);
+  useEffect(() => {
+    dispatch(fetchChatData());
+  }, [dispatch]);
 
-    return (
-        <Container className={styles.mainPage}>
-            <Row className={styles.contentBlock}>
-                <Col
-                    className={cn(styles.firstColumn, 'h-100 pb-3')}
-                    xxl={3}
-                    xl={3}
-                    lg={3}
-                    md={3}
-                    sm={3}
-                    xs={5}
-                >
-                    <Channels />
-                </Col>
+  return (
+    <Container className={styles.mainPage}>
+      <Row className={styles.contentBlock}>
+        <Col
+          className={cn(styles.firstColumn, 'h-100 pb-3')}
+          xxl={3}
+          xl={3}
+          lg={3}
+          md={3}
+          sm={3}
+          xs={5}
+        >
+          <Channels />
+        </Col>
 
-                <Col
-                    className="h-100 pb-3"
-                    xxl={9}
-                    xl={9}
-                    lg={9}
-                    md={9}
-                    sm={9}
-                    xs={7}
-                >
-                    <Messages />
-                </Col>
-            </Row>
-        </Container>
-    );
+        <Col
+          className="h-100 pb-3"
+          xxl={9}
+          xl={9}
+          lg={9}
+          md={9}
+          sm={9}
+          xs={7}
+        >
+          <Messages />
+        </Col>
+      </Row>
+    </Container>
+  );
 };
 
 export default MainPage;
