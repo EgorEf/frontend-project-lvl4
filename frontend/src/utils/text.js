@@ -1,5 +1,3 @@
-/* eslint-disable functional/no-let */
-
 const getTextByNumOfEntities = (num, textForms) => {
   const n = num % 10;
   const isExceptionNum = (num > 10 && num < 15);

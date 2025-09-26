@@ -26,7 +26,7 @@
     "yup": "1.1.1"
   },
   "scripts": {
-    "lint": "npx eslint .",
+    "lint": "react-scripts lint",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
